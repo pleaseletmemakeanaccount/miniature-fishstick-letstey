@@ -1,5 +1,5 @@
 import { BIOMES, BIOME_IDS, CHUNK_SIZE, CIRCUMFERENCE, HALF_LENGTH, OUTER_PLUG, OUTER_SOCKET, PYLONS, WATER_HEIGHT, WORLD_FLOOR, wrapU, type Biome } from './biomes';
-import type { BlockKind } from './model';
+import type { BlockKind } from '../data/model';
 import { caveBiomeAt, CAVE_TOP, STRATUM_HEIGHT } from './caves';
 
 export const hash = (x: number, z: number, seed = 0) => {

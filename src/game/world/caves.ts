@@ -1,5 +1,5 @@
 import { WORLD_FLOOR, wrapU } from './biomes';
-import type { BlockKind } from './model';
+import type { BlockKind } from '../data/model';
 
 // The crust is now extremely thick. Caves are organised into deep strata,
 // and each stratum hosts its own set of fully subterranean biomes.

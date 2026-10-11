@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { RotateCcw } from 'lucide-react';
-import { hash } from './world';
+import { hash } from '../world/world';
 
 interface PreviewProps { kind: 'rock' | 'voxels'; voxels?: boolean[]; color?: string }
 

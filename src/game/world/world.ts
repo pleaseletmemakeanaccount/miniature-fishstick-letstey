@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { BIOMES, CHUNK_SIZE, CIRCUMFERENCE, HALF_LENGTH, WORLD_CEILING, WORLD_FLOOR, wrapU, type Biome } from './biomes';
 import { baseKind, biomeAt, caveRange, clearTerrainCaches, columnBands, fluidAt, generateCaveDressing, generateFeatures, hash, terrainHeight, type ColumnInfo, type NaturalBlock } from './terrain';
-import { BLOCK_KINDS, GLOWING_KINDS, ITEMS, type BlockKind, type Settings, type WorldEdit } from './model';
+import { BLOCK_KINDS, GLOWING_KINDS, ITEMS, type BlockKind, type Settings, type WorldEdit } from '../data/model';
 import { FaceBuilder, FACES } from './geometry';
 import { CAVE_TOP } from './caves';
 import { gridKey } from './coordinates';

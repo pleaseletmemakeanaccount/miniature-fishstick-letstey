@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
 import { Activity, Apple, ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Backpack, BookOpen, Check, ChevronLeft, ChevronRight, Compass, Droplets, Heart, Menu, MessageSquare, MousePointer2, Pickaxe, Plus, Send, Settings2, Sparkles, Swords, Thermometer, Volume2, Waypoints, Wind, X } from 'lucide-react';
 import { MothMark, PixelLogo } from '../components/Brand';
-import { ErnasEngine, type EngineCallbacks, type WorldSnapshot } from './engine';
-import { BodyPanel, InventoryPanel, JournalPanel } from './Panels';
-import WorldAtlas from './Atlas';
-import { SleepPanel, Workbench } from './Workbench';
-import { Dialog, ItemIcon, Keycap, SectionHeading } from './ui';
-import { BIOME_CACHE_ITEMS, CARVE_MATERIALS, CROPS, healthyBody, ITEMS, LIMB_NAMES, LIMBS, loadSave, newSave, PYLONS, storeSave, type BlockKind, type ItemId, type Limb, type Panel, type SaveData, type Settings } from './model';
-import { BIOMES, BIOME_IDS, BOSSES, formatDistance, type Biome } from './biomes';
-import { CAVE_COUNT } from './caves';
-import './game.css';
+import { ErnasEngine, type EngineCallbacks, type WorldSnapshot } from './core/engine';
+import { BodyPanel, InventoryPanel, JournalPanel } from './panels/Panels';
+import WorldAtlas from './panels/Atlas';
+import { SleepPanel, Workbench } from './panels/Workbench';
+import { Dialog, ItemIcon, Keycap, SectionHeading } from '../components/ui';
+import { BIOME_CACHE_ITEMS, CARVE_MATERIALS, CROPS, healthyBody, ITEMS, LIMB_NAMES, LIMBS, loadSave, newSave, PYLONS, storeSave, type BlockKind, type ItemId, type Limb, type Panel, type SaveData, type Settings } from './data/model';
+import { BIOMES, BIOME_IDS, BOSSES, formatDistance, type Biome } from './world/biomes';
+import { CAVE_COUNT } from './world/caves';
+import '../styles/game.css';
 
 interface Notice { id: number; message: string; kind: 'normal' | 'danger' | 'achievement' }
 interface ChatMessage { author: string; text: string }
@@ -501,7 +501,7 @@ export default function Game({ onExit }: { onExit: () => void }) {
       reply = 'hey. strange place, huh? i know a few things. ask me about crafting, cheese, pylons, or steam.';
       notify('A small, square kindness has joined you.');
     } else if (command === '/help') {
-      author = 'WORLD'; reply = 'Say "hey" to meet a friend. Ask about crafting, cheese, pylons, or steam. Say "nyc" to Chill to quiet the aurora.';
+      author = 'WORLD'; reply = 'Say "hey" to meet a friend. Ask about crafting, creatures, cheese, pylons, or steam. Say "nyc" to Chill to quiet the aurora.';
     } else if (saveRef.current.companion) {
       if (command === 'nyc') { updateSave(current => ({ ...current, aurora: false })); reply = 'fine. the sky can be quiet again. still a good expression, though.'; }
       else if (/craft|sword|pickaxe|chisel/.test(command)) reply = '3 stone or iron. an 8 by 8 by 8 block. cut away what is not a tool. the guide is just a suggestion, but 70% accuracy is a good start. press C.';
@@ -510,6 +510,7 @@ export default function Game({ onExit }: { onExit: () => void }) {
       else if (/biome|desert|coral|ocean|crystal|forest|cloud|storm|cave|grove/.test(command)) reply = 'twelve kinds of unfamiliar. snow and sinkholes. mountains and cloud nests. coral and the abyss. broken stone, green crystals, storms, dunes, red water, and trees big enough for cities. the atlas has coordinates, hazards, and walking waypoints. check the supply caches, too.';
       else if (/dive|swim|air|pressure/.test(command)) reply = 'Space goes up, Ctrl goes down. your air comes back at the surface. the deep ocean squeezes harder below 28 blocks. i would rather stay on a dry, square rock.';
       else if (/steam|pork|albany|aurora/.test(command)) reply = 'one raw pork. one water. stand next to the campfire at the Hearth and press R. a little steam makes an excellent meal. and a very particular expression.';
+      else if (/creature|creatures|animal|beast|bestiary|species|bird|fish|monster/.test(command)) reply = 'ninety of them now, in every country and every stratum. some graze, some scatter, some hunt you by sound. the whole roster is written down in your field notes. press J, then open everything that moves.';
       else if (/obil|boss|fight/.test(command)) reply = 'it throws its own stones at you. rude. hit them back when they get close. three returns, one very quiet obelisk.';
       else if (/hello|hi|thanks|thank/.test(command)) reply = 'you are welcome here. at least, with me.';
       else reply = 'i am more of a making-things cube. ask about crafting, cheese, pylons, steam, or OBIL. sometimes it is enough just to be here.';

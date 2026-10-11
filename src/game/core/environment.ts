@@ -1,9 +1,9 @@
 import * as THREE from 'three';
-import { BIOMES, CIRCUMFERENCE, HALF_LENGTH, PYLONS, RADIUS, TORNADO_PATHS, WHALE_PATHS, wrapU, type Biome } from './biomes';
-import { toWorld } from './coordinates';
-import { biomeAt, fluidAt, hash, terrainHeight } from './terrain';
-import { caveBiomeAt, CAVE_TOP } from './caves';
-import type { PlayerPosition } from './model';
+import { BIOMES, CIRCUMFERENCE, HALF_LENGTH, PYLONS, RADIUS, TORNADO_PATHS, WHALE_PATHS, wrapU, type Biome } from '../world/biomes';
+import { toWorld } from '../world/coordinates';
+import { biomeAt, fluidAt, hash, terrainHeight } from '../world/terrain';
+import { caveBiomeAt, CAVE_TOP } from '../world/caves';
+import type { PlayerPosition } from '../data/model';
 
 export function makeGlow(color: string) {
   const canvas = document.createElement('canvas'); canvas.width = canvas.height = 128;

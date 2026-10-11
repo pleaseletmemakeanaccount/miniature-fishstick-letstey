@@ -1,11 +1,11 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { WorldAudio } from './audio';
-import { CROPS, ITEMS, LIMBS, PYLONS, type Biome, type BlockKind, type ItemId, type Limb, type PlayerPosition, type SaveData } from './model';
-import { biomeAt, fromWorld, hash, HALF_LENGTH, RADIUS, toWorld, VoxelWorld, WORLD_CEILING, WORLD_FLOOR, wrapU } from './world';
-import { BIOMES, BOSSES, OUTER_PLUG, OUTER_SOCKET, surfaceDistance } from './biomes';
-import { caveBiomeAt, CAVE_TOP, stratumOf } from './caves';
-import { buildCreatureModel, CREATURES, type CreatureDefinition } from './creatures';
+import { CROPS, ITEMS, LIMBS, PYLONS, type Biome, type BlockKind, type ItemId, type Limb, type PlayerPosition, type SaveData } from '../data/model';
+import { biomeAt, fromWorld, hash, HALF_LENGTH, RADIUS, toWorld, VoxelWorld, WORLD_CEILING, WORLD_FLOOR, wrapU } from '../world/world';
+import { BIOMES, BOSSES, OUTER_PLUG, OUTER_SOCKET, surfaceDistance } from '../world/biomes';
+import { caveBiomeAt, CAVE_TOP, stratumOf } from '../world/caves';
+import { buildCreatureModel, CREATURES, type CreatureDefinition } from '../creatures/creatures';
 import { makeGlow, WorldEnvironment } from './environment';
 
 export interface WorldSnapshot {
@@ -988,14 +988,14 @@ export class ErnasEngine {
       return true;
     });
     if (!pool.length) return null;
-    // Rarer, dangerous species show up less often.
-    const weights = pool.map(c => c.temperament === 'hostile' ? (c.hp > 100 ? .12 : .45) : c.temperament === 'ambient' ? 1.2 : 1);
+    // Each species carries its own rarity; heavier weights are more common.
+    const weights = pool.map(c => c.weight);
     let r = hash(Math.floor(this.elapsed * 7), this.position.u, 91) * weights.reduce((a, b) => a + b, 0);
     for (let i = 0; i < pool.length; i++) { r -= weights[i]; if (r <= 0) return pool[i]; }
     return pool[pool.length - 1];
   }
 
-  private spawnCreature(def: CreatureDefinition, daylight: number) {
+  private spawnCreature(def: CreatureDefinition) {
     const angle = hash(this.elapsed, def.hp, 3) * Math.PI * 2, dist = 22 + hash(this.elapsed, def.hp, 4) * 30;
     const u = wrapU(this.position.u + Math.cos(angle) * dist), z = THREE.MathUtils.clamp(this.position.z + Math.sin(angle) * dist, -HALF_LENGTH + 10, HALF_LENGTH - 10);
     const fluid = this.world.fluid(u, z);
@@ -1017,7 +1017,6 @@ export class ErnasEngine {
     const group = this.batchCreatureModel(model);
     this.placeGroup(group, u, h + (def.locomotion === 'fly' ? (def.hover ?? 3) : 0), z);
     this.creatures.push({ def, group, u, z, h, homeU: u, homeZ: z, hp: def.hp, cooldown: 0, phase: hash(u, z, 5) * 6, flee: 0, born: this.elapsed, wanderU: u, wanderZ: z });
-    void daylight;
   }
 
   /** Collapse a detailed box model to one colored mesh and one draw call. */
@@ -1067,7 +1066,7 @@ export class ErnasEngine {
     if (this.spawnClock > 2.2 && this.creatures.length < cap) {
       this.spawnClock = 0;
       const def = this.pickSpecies(daylight);
-      if (def) this.spawnCreature(def, daylight);
+      if (def) this.spawnCreature(def);
     }
     for (let i = this.creatures.length - 1; i >= 0; i--) {
       const c = this.creatures[i], def = c.def;
@@ -1092,7 +1091,7 @@ export class ErnasEngine {
       if (length > .4 && hop) {
         const nu = wrapU(c.u + dirU / length * delta * speed), nz = c.z + dirZ / length * delta * speed;
         const fluid = this.world.fluid(nu, nz);
-        const ok = def.locomotion === 'swim' ? !!fluid : def.locomotion === 'fly' || !fluid || (fluid && def.locomotion === 'walk' && false) || def.id === 'frog' || def.id === 'turtle';
+        const ok = def.locomotion === 'swim' ? !!fluid : def.locomotion === 'fly' || !fluid || !!def.amphibious;
         if (ok) {
           if (def.locomotion === 'walk' || def.locomotion === 'hop') {
             const g = this.world.ground(nu, nz, c.h + 1.5);
@@ -1116,14 +1115,18 @@ export class ErnasEngine {
       toWorld(c.u, c.h + bounce, c.z, c.group.position);
       c.group.rotation.set(0, 0, c.u / RADIUS);
       if (length > .2) c.group.quaternion.multiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.atan2(-dirU, -dirZ)));
-      if (def.id === 'butterfly' || def.id === 'bat' || def.id === 'firefly') c.group.rotation.x += Math.sin(this.renderTime * 12 + c.phase) * .3;
+      if (def.flutter) c.group.rotation.x += Math.sin(this.renderTime * 12 + c.phase) * .3;
       c.group.scale.lerp(this.temp.set(def.scale ?? 1, def.scale ?? 1, def.scale ?? 1), delta * 8);
       if (hostile && distance < 2.4 && Math.abs(this.position.h - c.h) < 3.5 && c.cooldown <= 0 && save.mode === 'survival') {
         const limb = LIMBS[Math.floor(hash(Math.floor(this.renderTime), c.phase) * LIMBS.length)];
         this.callbacks.onDamage(limb, def.damage, `${def.name} strikes.`);
         this.audio.tick('hurt'); c.cooldown = 1.6;
       }
-      if (def.id === 'jellyfish' && distance < 1.4 && c.cooldown <= 0 && save.mode === 'survival') { this.callbacks.onDamage('torso', def.damage, 'The jelly stings.'); c.cooldown = 2; }
+      if (def.sting && distance < 1.4 && c.cooldown <= 0 && save.mode === 'survival') {
+        this.callbacks.onDamage('torso', def.damage, def.sting);
+        this.audio.tick('hurt');
+        c.cooldown = 2;
+      }
     }
   }
 

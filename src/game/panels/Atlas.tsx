@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { ArrowRight, Check, Compass, Crosshair, Layers, MapPin, Minus, Plus, RotateCcw, Search, X } from 'lucide-react';
-import { BIOMES, BIOME_IDS, CIRCUMFERENCE, HALF_LENGTH, PYLONS, formatDistance, surfaceDistance, wrapU, type Biome } from './biomes';
-import { biomeAt, fluidAt, terrainHeight } from './terrain';
-import type { WorldSnapshot } from './engine';
-import type { SaveData } from './model';
-import { SectionHeading } from './ui';
+import { BIOMES, BIOME_IDS, CIRCUMFERENCE, HALF_LENGTH, PYLONS, formatDistance, surfaceDistance, wrapU, type Biome } from '../world/biomes';
+import { biomeAt, fluidAt, terrainHeight } from '../world/terrain';
+import type { WorldSnapshot } from '../core/engine';
+import type { SaveData } from '../data/model';
+import { SectionHeading } from '../../components/ui';
 
 const WIDTH = 640, HEIGHT = 500;
 const mapPoint = (u: number, z: number) => ({ x: 24 + (u + CIRCUMFERENCE / 2) / CIRCUMFERENCE * 592, y: 24 + (z + HALF_LENGTH) / (HALF_LENGTH * 2) * 444 });
