@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, Check, Eye, RotateCcw, Undo2 } from 'lucide-react';
 import ObjectPreview from './ObjectPreview';
-import { CARVE_MATERIALS, CARVE_TOOLS, ITEMS, type CarveTool, type ItemId, type SaveData } from './model';
-import { ItemIcon, SectionHeading } from './ui';
+import { CARVE_MATERIALS, CARVE_TOOLS, ITEMS, type CarveTool, type ItemId, type SaveData } from '../data/model';
+import { ItemIcon, SectionHeading } from '../../components/ui';
 
 const PROFILES: Record<CarveTool, string[]> = {
   sword: ['00011000', '00011000', '00011000', '00011000', '01111110', '00011000', '00011000', '00111100'],

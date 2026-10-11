@@ -29,8 +29,13 @@ button { color: inherit; }
 .ernas-app.is-playing { height: 100dvh; min-height: 0; }
 .ernas-app.is-playing > .world-backdrop { visibility: hidden; }
 .ernas-app.is-playing .world-image, .ernas-app.is-playing .world-motes i { animation-play-state: paused; }
-.world-backdrop, .world-image, .world-shade, .world-grain, .world-motes { position: absolute; inset: 0; pointer-events: none; }
+.world-backdrop, .world-mark, .world-image, .world-shade, .world-grain, .world-motes { position: absolute; inset: 0; pointer-events: none; }
 .world-backdrop { overflow: hidden; background: #333c2d; }
+/* Title backdrop, in two layers. The photograph sits on top; beneath it, the moth mark
+   from /favicon.svg is scaled up as a quiet emblem. Delete public/images/ernas-world.jpg
+   and the title screen falls back to the mark instead of rendering a flat void. Edit the
+   favicon and this layer follows, because both read the same file. */
+.world-mark { background: url('/favicon.svg') center 38% / min(66vmin, 540px) no-repeat; opacity: .42; filter: drop-shadow(0 0 60px #0d150eaa); }
 .world-image { background: url('/images/ernas-world.jpg') center center / cover no-repeat; animation: world-breathe 35s ease-in-out infinite alternate; transform: scale(1.025); }
 .world-shade { background: linear-gradient(180deg, rgba(8, 13, 9, .24) 0%, rgba(14, 20, 12, .05) 20%, rgba(14, 18, 12, .06) 38%, rgba(10, 15, 9, .22) 65%, rgba(5, 9, 6, .82) 100%), radial-gradient(ellipse at 50% 38%, transparent 10%, rgba(6, 10, 6, .25) 100%); }
 .world-grain { opacity: .09; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.93' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23ffffff' filter='url(%23n)' opacity='.7' d='M0 0h180v180H0z'/%3E%3C/svg%3E"); mix-blend-mode: soft-light; }
@@ -75,6 +80,7 @@ button { color: inherit; }
 @media (min-aspect-ratio: 19/10) { .title-composition { top: 32%; width: min(560px, 60vw); } .start-group { margin-top: 27px; } }
 @media (min-width: 1600px) and (min-height: 900px) { .title-composition { width: 750px; } .title-description { font-size: 15px; margin-top: 31px; } .start-group { margin-top: 57px; } .start-button { width: 232px; height: 58px; } }
 @media (max-width: 700px) {
+  .world-mark { background-size: min(86vmin, 380px); background-position: center 34%; }
   .title-screen { padding: 24px 22px; }
   .title-header { font-size: 7px; letter-spacing: 1px; }
   .studio-mark { gap: 8px; }

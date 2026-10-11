@@ -1,7 +1,47 @@
 import { useState } from 'react';
 import { ArrowDownUp, ArrowRight, Check, ChevronRight, Circle, Compass, LockKeyhole, Search, Sparkles, Trash2 } from 'lucide-react';
-import { FIELD_NOTES, ITEMS, LIMB_NAMES, LIMBS, sortedInventory, type ItemId, type Limb, type SaveData } from './model';
-import { ItemIcon, SectionHeading } from './ui';
+import { FIELD_NOTES, ITEMS, LIMB_NAMES, LIMBS, sortedInventory, type ItemId, type Limb, type SaveData } from '../data/model';
+import { BIOMES } from '../world/biomes';
+import { CREATURE_GROUPS, CREATURES, creaturesOfGroup, type CreatureDefinition, type Temperament } from '../creatures/creatures';
+import { ItemIcon, SectionHeading } from '../../components/ui';
+
+const TEMPERAMENT_LABEL: Record<Temperament, string> = {
+  passive: 'Passive', skittish: 'Skittish', hostile: 'Hostile', ambient: 'Ambient',
+};
+
+const habitatOf = (creature: CreatureDefinition) => {
+  if (!creature.biomes.length) return creature.minStratum ? `Stratum ${creature.minStratum} and below` : 'Deep rock';
+  return creature.biomes.map(biome => BIOMES[biome].shortName).join(' / ');
+};
+
+const dropOf = (creature: CreatureDefinition) => {
+  if (creature.dropCount <= 0) return 'Nothing';
+  const item = ITEMS[creature.drop];
+  return `${item ? item.name : creature.drop}${creature.dropCount > 1 ? ` x${creature.dropCount}` : ''}`;
+};
+
+/** The full species roster, grouped by the country each creature keeps. */
+export function BestiaryIndex() {
+  return (
+    <div className="bestiary-groups">
+      {CREATURE_GROUPS.map(group => (
+        <section className="bestiary-group" key={group.id}>
+          <h4>{group.label}<small>{group.subtitle}</small></h4>
+          <ul className="bestiary-list">
+            {creaturesOfGroup(group.id).map(creature => (
+              <li key={creature.id} className={creature.temperament} title={creature.flavour}>
+                <span className="bestiary-name">{creature.name}</span>
+                <span className="bestiary-temperament">{TEMPERAMENT_LABEL[creature.temperament]}</span>
+                <span className="bestiary-habitat">{habitatOf(creature)}</span>
+                <span className="bestiary-drop">{dropOf(creature)}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  );
+}
 
 export function InventoryPanel({ save, onUse, onEquip, onDrop }: {
   save: SaveData; onUse: (id: ItemId) => void; onEquip: (id: ItemId) => void; onDrop: (id: ItemId) => void;
@@ -102,7 +142,14 @@ export function JournalPanel({ save }: { save: SaveData }) {
     <SectionHeading eyebrow="FIELD NOTES / A RECORD OF THE UNFAMILIAR" title="Things worth remembering." />
     <div className="journal-layout">
       <nav className="journal-index" aria-label="Field notes">{FIELD_NOTES.map(entry => <button className={selected === entry.id ? 'active' : ''} onClick={() => setSelected(entry.id)} key={entry.id}><span>{entry.number}</span><div><small>{entry.subtitle.split(' / ')[0]}</small>{entry.title}</div><ChevronRight size={14} /></button>)}</nav>
-      <article className="journal-page" key={selected}><p className="eyebrow">OBSERVATION {note.number}</p><h3>{note.title}</h3><p>{note.text}</p><div className="field-hint"><Compass size={18} /><p>{note.hint}</p></div><h4>A SMALL BEGINNING</h4><ul className="field-goals">{goals.map(goal => <li key={goal.title} className={goal.done ? 'complete' : ''}>{goal.done ? <Check size={15} /> : <Circle size={13} />}<span>{goal.title}<small>{goal.detail}</small></span></li>)}</ul><div className={`sole-achievement ${save.achievement ? 'unlocked' : ''}`}><Sparkles size={18} /><div><span>AN ALBANY EXPRESSION</span><small>{save.achievement ? 'Steamed pork. An aurora. The only achievement.' : 'The only achievement. Something to do with steam.'}</small></div>{save.achievement ? <Check size={16} /> : <LockKeyhole size={14} />}</div></article>
+      <article className="journal-page" key={selected}>
+        <p className="eyebrow">OBSERVATION {note.number}</p><h3>{note.title}</h3><p>{note.text}</p>
+        <div className="field-hint"><Compass size={18} /><p>{note.hint}</p></div>
+        {selected === 'bestiary' ? <><h4>SPECIES ON RECORD ({CREATURES.length})</h4><BestiaryIndex /></> : <>
+          <h4>A SMALL BEGINNING</h4><ul className="field-goals">{goals.map(goal => <li key={goal.title} className={goal.done ? 'complete' : ''}>{goal.done ? <Check size={15} /> : <Circle size={13} />}<span>{goal.title}<small>{goal.detail}</small></span></li>)}</ul>
+          <div className={`sole-achievement ${save.achievement ? 'unlocked' : ''}`}><Sparkles size={18} /><div><span>AN ALBANY EXPRESSION</span><small>{save.achievement ? 'Steamed pork. An aurora. The only achievement.' : 'The only achievement. Something to do with steam.'}</small></div>{save.achievement ? <Check size={16} /> : <LockKeyhole size={14} />}</div>
+        </>}
+      </article>
     </div>
   </>;
 }

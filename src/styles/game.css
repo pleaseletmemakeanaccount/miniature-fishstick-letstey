@@ -199,6 +199,22 @@ kbd { display: inline-flex; align-items: center; justify-content: center; font: 
 .field-hint { display: flex; align-items: flex-start; gap: 12px; border-left: 2px solid #a6ba7d65; padding: 2px 0 2px 15px; margin-bottom: 26px; }
 .field-hint > svg { color: #a8bb88; flex-shrink: 0; margin-top: 4px; }
 .field-hint > p { margin: 0; font-size: 11px; line-height: 1.8; color: #a1b08b; }
+.bestiary-groups { display: grid; gap: 24px; }
+.bestiary-group h4 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; }
+.bestiary-group h4 small { letter-spacing: 1px; color: #5e7049; }
+.bestiary-list { list-style: none; margin: 0; padding: 0; }
+.bestiary-list li { display: grid; grid-template-columns: minmax(118px, 1.1fr) 72px minmax(148px, 1.5fr) minmax(92px, .9fr); gap: 12px; align-items: baseline; padding: 6px 0; border-bottom: 1px solid #a6b48a12; font-size: 11px; line-height: 1.6; color: #a9b695; }
+.bestiary-list li:last-child { border-bottom: 0; }
+.bestiary-name { color: #dde2c6; }
+.bestiary-temperament { font: 7px var(--mono); letter-spacing: 1px; text-transform: uppercase; color: #86966f; }
+.bestiary-list li.passive .bestiary-temperament { color: #93b47d; }
+.bestiary-list li.skittish .bestiary-temperament { color: #c9bd7a; }
+.bestiary-list li.ambient .bestiary-temperament { color: #8fb0b6; }
+.bestiary-list li.hostile .bestiary-temperament { color: #c98d7a; }
+.bestiary-habitat { color: #85977a; }
+.bestiary-drop { color: #8a9a72; text-align: right; }
+@media (max-width: 860px) { .bestiary-list li { grid-template-columns: minmax(0, 1.2fr) 84px minmax(0, 1fr); } .bestiary-habitat { display: none; } }
+@media (max-width: 520px) { .bestiary-list li { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } .bestiary-drop { display: none; } }
 .journal-page h4 { font: 7px var(--mono); letter-spacing: 1.5px; color: #758e5e; margin: 0 0 11px; }
 .field-goals { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; column-gap: 20px; }
 .field-goals > li { display: flex; align-items: flex-start; gap: 9px; padding: 12px 0; color: #839775; }

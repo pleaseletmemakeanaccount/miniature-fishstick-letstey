@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, type ReactNode } from 'react';
 import { X } from 'lucide-react';
-import { MothMark } from '../components/Brand';
-import { ITEMS, type ItemId, type Panel } from './model';
+import { MothMark } from './Brand';
+import { ITEMS, type ItemId, type Panel } from '../game/data/model';
 
 export function Keycap({ children }: { children: ReactNode }) {
   return <kbd>{children}</kbd>;

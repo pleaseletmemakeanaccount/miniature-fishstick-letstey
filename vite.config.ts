@@ -11,6 +11,10 @@ const __dirname = path.dirname(__filename);
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss(), viteSingleFile()],
+  // The game is also served from proxied preview hosts, so accept any host
+  // header and listen on every interface.
+  server: { host: "0.0.0.0", allowedHosts: true },
+  preview: { host: "0.0.0.0", allowedHosts: true },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),

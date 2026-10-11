@@ -1,6 +1,190 @@
 # ERNAS
 
-An atmospheric, playable browser fragment of the ERNAS specification. React, TypeScript, Vite, and Three.js. The title screen deliberately contains exactly one interactive element: START.
+An atmospheric, playable browser fragment of the ERNAS specification. React, TypeScript, Vite, and Three.js. The title screen deliberately contains exactly one interactive element: START. Its backdrop is layered: `public/images/ernas-world.jpg` sits on top of the moth mark from `public/favicon.svg`. Remove the photograph and the title screen quietly falls back to the vector mark; edit the favicon and the fallback follows, because both read the same file.
+
+## Bestiary 0.7
+
+**Ninety species** now share the cylinder: the inner wall, the air above it, the shallows and trenches, and the seven strata under your feet. Each one has a hand-built blocky model, a disposition, a biome or depth it belongs to, its own chance of showing up, and something to drop when it falls.
+
+| | |
+| --- | --- |
+| Species on record | **90** (45 in 0.5, 45 added in 0.7) |
+| Dispositions | Passive, skittish, ambient, hostile |
+| Locomotion | Walk, hop, fly, swim |
+| Biomes with resident fauna | All 28 |
+| Underground-only species | 13, spread across strata 0-6 |
+| Aquatic species / flyers | 13 / 20 |
+
+What changed in 0.7:
+
+- **Rarity is written into the roster.** Every species carries its own spawn weight, so common farm animals, ambient life, and rare horrors are tuned table-side rather than inferred from health in the engine.
+- **Species behaviour is data, not special cases.** Wing flutter, contact stings, and amphibious walkers are now flags on the species definition; the engine no longer names individual creatures.
+- **45 new species**, listed in the tables below: farm stock, canopy wildlife, marsh and fungal fauna, cold-ground animals, sky and weather life, desert and badlands hunters, ash-and-bone scavengers, coastline and reef life, one very large abyssal mouth, and four new deep-strata residents including the cave troll and the lodestone golem.
+- **The field notes now hold a bestiary.** Open the journal with J and pick *Everything that moves.* to read the whole roster grouped by habitat, with disposition, range, and drops for each species. Hover a name for its field description.
+
+Striking a creature with a weapon damages it and wears the tool. Kills grant that species' drop: meat, feathers, leather, shell, chitin, ink, crystal, storm glass, cloudstone, or — at the very bottom of the world — the Ernas seed. Night shifts the roster, and so does depth: the deeper the stratum, the less familiar the neighbours.
+
+### Species tables
+
+### Pasture and farmland
+
+*MEADOW, SAVANNA, AND SETTLED GROUND*
+
+| Species | Disposition | Habitat | Drops |
+| --- | --- | --- | --- |
+| Cow | Passive | Meadow / Savanna / Taiga / Highlands | Raw pork ×2 |
+| Sheep | Passive | Meadow / Highlands / Tundra / Mountains | Mothsilk cloth ×2 |
+| Pig | Passive | Meadow / Taiga / Savanna / Giant Groves | Raw pork ×2 |
+| Steppe horse | Passive | Savanna / Meadow / Badlands / Canyon | Cured leather ×2 |
+| Chicken | Skittish | Meadow / Savanna / Taiga / Giant Groves / Jungle | Boiled egg |
+| Dog | Passive | Meadow / Taiga / Savanna / Highlands | — |
+| Cat | Skittish | Meadow / Giant Groves / Desert / Badlands | — |
+| Butterfly | Ambient | Meadow / Jungle / Giant Groves / Savanna | — |
+| Dune meerkat | Ambient | Desert / Savanna / Badlands | Raw pork |
+| Stag beetle | Ambient | Meadow / Jungle / Giant Groves | Chitin plate |
+
+### Woodland and canopy
+
+*TAIGA, GIANT GROVES, AND JUNGLE*
+
+| Species | Disposition | Habitat | Drops |
+| --- | --- | --- | --- |
+| Kiwi bird | Skittish | Giant Groves / Jungle / Taiga / Mushroom Marsh | Roast kiwi |
+| Owl | Ambient | Taiga / Giant Groves / Highlands / Mountains | Wing feather ×2 |
+| Canopy monkey | Skittish | Jungle / Giant Groves | Sweet berries ×2 |
+| Reef parrot | Ambient | Jungle / Giant Groves / Coral Reefs / Savanna | Wing feather ×2 |
+| Great moth | Ambient | Giant Groves / Sinkholes / Highlands / Taiga | Mothsilk cloth ×2 |
+| Canopy hornet | Hostile | Jungle / Giant Groves / Mushroom Marsh | Chitin plate |
+| Grove panther | Hostile | Jungle / Giant Groves | Cured leather ×3 |
+| Salt gull | Ambient | Coral Reefs / Blood Shores / Desert / Taiga | Wing feather ×2 |
+
+### Wetland and fungal marsh
+
+*SWAMP, SPOREHOLLOW, AND SINKHOLES*
+
+| Species | Disposition | Habitat | Drops |
+| --- | --- | --- | --- |
+| Frog | Passive | Swamp / Meadow / Jungle / Mushroom Marsh | — |
+| Horned toad | Passive | Swamp / Jungle / Mushroom Marsh / Sinkholes | Edible spore cap |
+| Glow snail | Ambient | Mushroom Marsh / Swamp / Sinkholes | Luminous fungus |
+| Firefly swarm | Ambient | Swamp / Meadow / Mushroom Marsh / Giant Groves | — |
+| Will-o-wisp | Ambient | Swamp / Mushroom Marsh / Sinkholes | Luminous fungus |
+| Grey heron | Ambient | Swamp / Coral Reefs / Meadow / Jungle | Wing feather ×2 |
+| Marsh leech | Hostile | Swamp / Mushroom Marsh | Liquid blood |
+| Sporeling | Hostile | Mushroom Marsh / Swamp | Edible spore cap ×2 |
+| Mireling | Hostile | Swamp | Mud ×3 |
+| Blood crocodile | Hostile | Swamp / Coral Reefs / Blood Shores | Cured leather ×3 |
+
+### Cold and high ground
+
+*TUNDRA, GLACIER, AND THE TITAN RANGE*
+
+| Species | Disposition | Habitat | Drops |
+| --- | --- | --- | --- |
+| Mountain goat | Skittish | Mountains / Highlands / Glacier / Sky Ring | Raw pork |
+| Penguin | Passive | Glacier / Tundra / Mountains | Raw fish |
+| Woolly mammoth | Passive | Tundra / Glacier | Cured leather ×4 |
+| Caribou | Passive | Tundra / Glacier / Taiga / Mountains | Cured leather ×2 |
+| Snow hare | Skittish | Tundra / Glacier / Meadow / Highlands | Raw pork |
+| Arctic fox | Skittish | Glacier / Tundra / Mountains | Cured leather |
+| Ridge eagle | Hostile | Mountains / Highlands / Sky Ring | Wing feather ×3 |
+| Frost wolf | Hostile | Glacier / Tundra / Mountains / Taiga | Cured leather ×2 |
+| Snowwalker | Hostile | Glacier / Tundra | Blue ice ×3 |
+
+### Sky and weather
+
+*SKY RING, CLOUD NESTS, AND STORM FIELDS*
+
+| Species | Disposition | Habitat | Drops |
+| --- | --- | --- | --- |
+| Sky squirrel | Hostile | Sky Ring / Cloud Nests / Mountains | Wing feather |
+| Cloud serpent | Hostile | Cloud Nests / Sky Ring / Storm Fields | Wyrm scale |
+| Thunderling | Hostile | Storm Fields / Broken Lands | Storm glass |
+| Sky whale | Ambient | Cloud Nests / Sky Ring | Cloudstone ×3 |
+| Cloud jelly | Ambient | Cloud Nests / Sky Ring / Storm Fields | Glowstone |
+| Storm roc | Hostile | Cloud Nests / Storm Fields / Sky Ring | Wing feather ×4 |
+
+### Sand and stone wastes
+
+*DESERT, BADLANDS, AND CANYON*
+
+| Species | Disposition | Habitat | Drops |
+| --- | --- | --- | --- |
+| Camel | Passive | Desert / Badlands / Outer Sphere / Bonefields | Cured leather ×2 |
+| Sand tortoise | Passive | Desert / Savanna / Badlands | Shell block |
+| Sun lizard | Skittish | Desert / Badlands / Canyon / Volcanic | — |
+| Dust ostrich | Skittish | Desert / Savanna / Badlands | Wing feather ×3 |
+| Dune scorpion | Hostile | Desert / Badlands / Outer Sphere / Canyon | Chitin plate ×2 |
+| Canyon jackal | Hostile | Badlands / Canyon / Desert / Savanna | Cured leather |
+| Sand serpent | Hostile | Desert / Badlands | Carved sandstone ×2 |
+| Bone vulture | Ambient | Bonefields / Desert / Badlands / Outer Sphere | Wing feather ×2 |
+| Glasswing | Ambient | Spiked Forest / Desert / Canyon | Glass |
+
+### Ash, bone, and dead world
+
+*VOLCANIC, BONEFIELDS, AND OUTER SPHERE*
+
+| Species | Disposition | Habitat | Drops |
+| --- | --- | --- | --- |
+| Ash walker | Hostile | Volcanic | Ember stone ×2 |
+| Cinder hound | Hostile | Volcanic / Broken Lands | Ember stone ×2 |
+| Ember salamander | Passive | Volcanic / Canyon / Badlands | Sulfur |
+| Obsidian beetle | Ambient | Volcanic / Broken Lands | Obsidian |
+| Bone thief | Hostile | Bonefields / Broken Lands / Desert | Bone block ×3 |
+| Tomb scarab | Ambient | Bonefields / Desert / Outer Sphere | Chitin plate |
+| Grave moth | Ambient | Bonefields / Outer Sphere | Mothsilk cloth |
+| Scrap hound | Hostile | Outer Sphere / Bonefields / Broken Lands | Scrap metal ×2 |
+| Terminus protector | Hostile | Outer Sphere | Circuit block ×3 |
+| Crystal crawler | Hostile | Crystal Fields / Spiked Forest | Crystal shard ×2 |
+| Geode crab | Hostile | Crystal Fields / Spiked Forest / Broken Lands | Crystal shard ×2 |
+
+### Shallows and coastline
+
+*REEFS, SHORES, AND THE SUNLIT SEA*
+
+| Species | Disposition | Habitat | Drops |
+| --- | --- | --- | --- |
+| Cod | Ambient | Coral Reefs / Deep Ocean / Abyss | Raw fish |
+| Salmon | Ambient | Taiga / Meadow / Coral Reefs | Raw fish |
+| Moon jelly | Ambient | Coral Reefs / Deep Ocean | — |
+| Sea turtle | Passive | Coral Reefs / Deep Ocean | Shell block |
+| Reef ray | Ambient | Coral Reefs / Deep Ocean | Raw fish |
+| Reef star | Ambient | Coral Reefs | Rose coral |
+| Hermit crab | Passive | Coral Reefs / Desert / Savanna | Shell block |
+| River piranha | Hostile | Swamp / Jungle / Coral Reefs | Raw fish |
+| Barracuda | Hostile | Coral Reefs / Deep Ocean / Abyss | Raw fish ×2 |
+| Two-headed flamingo | Hostile | Blood Shores / Swamp / Coral Reefs | Wing feather ×3 |
+
+### The deep ocean
+
+*ABYSSAL TRENCHES AND PRESSURE*
+
+| Species | Disposition | Habitat | Drops |
+| --- | --- | --- | --- |
+| Anglerfish | Hostile | Abyss / Deep Ocean | Glowstone |
+| Giant squid | Hostile | Abyss / Deep Ocean | Squid ink ×2 |
+| Abyss gulper | Hostile | Abyss | Abyss crystal |
+| Kraken | Hostile | Abyss | Kraken tooth |
+
+### Underground strata
+
+*CAVES, STRATA 0-6, AND THE CRADLE*
+
+| Species | Disposition | Habitat | Drops |
+| --- | --- | --- | --- |
+| Glowworm | Ambient | Stratum 0+ | Luminous fungus |
+| Pale pillbug | Ambient | Stratum 0+ | Chitin plate |
+| Mole rat | Skittish | Stratum 0+ | Raw pork |
+| Cave bat | Ambient | Stratum 0+ | — |
+| Cave spider | Hostile | Stratum 0+ | Silk string ×2 |
+| Gem beetle | Ambient | Stratum 1+ | Quartz block |
+| Deep skeleton | Hostile | Stratum 1+ | Bone block ×2 |
+| Magma slug | Hostile | Stratum 2+ | Magma block |
+| Cave troll | Hostile | Stratum 2+ | Bone block ×3 |
+| Echo wraith | Hostile | Stratum 3+ | Echo stone ×2 |
+| Lodestone golem | Hostile | Stratum 4+ | Lodestone |
+| Void crawler | Hostile | Stratum 5+ | Void stone ×3 |
+| Cradle keeper | Hostile | Stratum 6+ | Ernas seed |
 
 ## Stability Pass 0.6
 
@@ -16,19 +200,6 @@ No gameplay content was removed. This pass targets the crashes introduced by the
 - WebGL context loss pauses simulation and allocation until restoration instead of continuing to build chunks against a dead renderer.
 - Corrupt/legacy saved positions resolve directly to nearby air rather than probing hundreds of blocks, and save dictionaries/farm coordinates receive finite bounds validation.
 - Failed detail-chunk allocations leave logical collision and distant terrain intact, then retry later instead of entering an immediate crash loop.
-
-## Bestiary 0.5
-
-**45 new creature species**, each with a detailed blocky model, its own behaviour, and a biome-aware spawn table. Creatures spawn around you based on where you are (surface biome, or cave stratum underground) and time of day, wander, and despawn when you leave.
-
-- **Passive fauna:** cow, chicken, kiwi, frog, dog, cat, mountain goat, camel, sand tortoise, penguin, woolly mammoth, sun lizard, glow snail.
-- **Ambient:** owl (nocturnal), butterfly, firefly swarm (nocturnal), cod, salmon, moon jelly (stings), sea turtle, cave bat, bone vulture, glowworm.
-- **Skittish** species run when you approach; **hostile** ones chase and strike in survival.
-- **Hostile surface:** sky squirrel, cloud serpent, two-headed flamingo, bone thief, ash walker, frost wolf, sporeling, crystal crawler, dune scorpion, mireling, terminus protector, snowwalker.
-- **Deep sea:** anglerfish, giant squid, and the kraken at the bottom of the abyss.
-- **Underground-only, by stratum:** cave spider, mole rat, deep skeleton, magma slug, echo wraith, void crawler, and the Cradle keeper at the very bottom.
-
-Striking a creature with a weapon damages it and wears the tool; kills grant species-specific drops (meat, feathers, leather, shell, ink, crystal, and the Ernas seed from the Cradle keeper).
 
 ## Underground Expansion 0.4
 
@@ -100,7 +271,7 @@ Press START or Enter. Click the 3D world to capture the mouse. If mouse capture 
 | B | Limb integrity and bandaging |
 | C | Sub-voxel shaping bench |
 | M / P | World atlas, biome selection, pylon network, and walking waypoints |
-| J | Field notes and progression |
+| J | Field notes, progression, and the species bestiary |
 | T | Local companion chat |
 | Escape | Pause or close a panel |
 
@@ -108,7 +279,7 @@ Press START or Enter. Click the 3D world to capture the mouse. If mouse capture 
 
 Start near the Hearth. Gather a few blocks, inspect your body, and carve a sword at the shaping bench. Click and drag through the 8x8 grid to remove material; the through-cut option affects all eight depth layers. Individual depth layers, undo, reset, a silhouette guide, and a live rotatable 3D preview are available. A tool needs at least 70% silhouette accuracy and three stone or iron blocks. Accuracy affects sword damage and pickaxe speed.
 
-The Hearth, Cloudbreak Ridge, and the new expedition destinations are already linked. Travel while near a pylon. The Fracture lies on the western arc, at arc -77 and Z -23. Approach and interact to attune it. OBIL waits nearby at arc -76 and Z -35. Strike an incoming projectile when it is close; three reflected projectiles break its core.
+Open the field notes with J to read the bestiary: ninety species, grouped by the country each one keeps, with what it thinks of you and what it leaves behind. The Hearth, Cloudbreak Ridge, and the new expedition destinations are already linked. Travel while near a pylon. The Fracture lies on the western arc, at arc -77 and Z -23. Approach and interact to attune it. OBIL waits nearby at arc -76 and Z -35. Strike an incoming projectile when it is close; three reflected projectiles break its core.
 
 Type `hey` in chat to summon the Chill Entity. Ask about crafting, cheese, pylons, steam, or OBIL. Steam one raw pork with one flask of water at the Hearth's campfire to trigger **An Albany Expression**, the only achievement. The aurora persists until you tell Chill `nyc`.
 
@@ -124,6 +295,7 @@ The mothsilk bed at the Hearth opens the rock-spinning sleep interaction. Comple
 - Hunger, thirst, raw-meat poisoning, eating, drinking, refilling water, bandaging, and sleeping.
 - Manual 8x8x8 tool shaping with accuracy-based attributes.
 - An interactive world atlas, pylon travel, supply caches, a following companion, simple skeleton and False Player behavior, ambient fish/wyrm, and the OBIL encounter.
+- A ninety-species bestiary with biome- and depth-aware spawning, dispositions from passive to hostile, drops, and an in-game species index in the field notes.
 - Procedural ambient audio, working settings, keyboard-accessible dialogs, and reduced-motion options.
 - Versioned, validated local saves. Automatic saving every ten seconds and saving on exit. World edits, inventory, physiology, discoveries, and preferences survive reloads.
 
@@ -139,29 +311,79 @@ Voxel state is separate from rendering. Nearby 16x16-column chunks are generated
 
 Ray marching queries logical blocks rather than raycasting the entire render mesh. Mining exposes underground neighbors and cave surfaces. World edits are stored as a delta over deterministic terrain and structures. Transient sand and storm debris are settled before saving or traveling so material is not lost from a checkpoint. Surface fluids are animated meshes with immersion mechanics, not a full fluid solver.
 
+## Project Layout
+
+```
+src/
+  main.tsx                        entry point
+  App.tsx                         title screen (one interactive element: START)
+  styles/
+    base.css                      title screen, tokens, and motion
+    game.css                      HUD, dialogs, panels, and journal
+  components/
+    Brand.tsx                     pixel wordmark and moth mark
+    ui.tsx                        shared dialog, item icon, and heading primitives
+    cn.ts                         class-name merge helper
+  game/
+    Game.tsx                      session, survival state, UI, and persistence
+    core/
+      engine.ts                   render loop, input, movement, combat, spawning
+      environment.ts              atmosphere, weather, tornadoes, fish, wyrm
+      audio.ts                    procedural sounds
+    world/
+      biomes.ts                   dimensions, biome table, pylons, boss list
+      caves.ts                    strata and the subterranean biome table
+      terrain.ts                  terrain, caves, trees, coral, crystals, ruins
+      world.ts                    chunk streaming, edits, meshing, distant LOD
+      geometry.ts                 indexed voxel face generation
+      coordinates.ts              logical <-> world conversion
+    creatures/
+      creatures.ts                the bestiary: roster, weights, drops, models
+    data/
+      model.ts                    save schema, item table, crops, field notes
+    panels/
+      Panels.tsx                  inventory, body, journal, bestiary index
+      Atlas.tsx                   cartography, travel, waypoints
+      Workbench.tsx               shaping bench and sleep interaction
+      ObjectPreview.tsx           rotatable 3D tool and rock previews
+public/
+  favicon.svg                     the moth mark. Also the fallback title artwork.
+  images/ernas-world.jpg          title-screen photograph
+```
+
+`npm install && npm run build` produces a single self-contained `dist/index.html`. `npm run dev` serves the world on port 5173.
+
 ## Project Map
 
-| File | Responsibility |
+| Path | Responsibility |
 | --- | --- |
 | `src/App.tsx` | Minimal title screen and game entry |
+| `src/styles/base.css` | Title screen, colour tokens, and motion |
+| `src/styles/game.css` | HUD, dialogs, panels, and journal styling |
 | `src/components/Brand.tsx` | Original pixel wordmark and moth symbol |
+| `src/components/ui.tsx` | Shared dialog, item icon, keycap, and heading primitives |
+| `src/components/cn.ts` | Class-name merge helper |
 | `src/game/Game.tsx` | Session, survival state, UI, and persistence orchestration |
-| `src/game/engine.ts` | Rendering, input, movement, interactions, entities, and combat |
-| `src/game/world.ts` | Chunk streaming, edit storage, surface meshing, distant LOD, and fluid meshes |
-| `src/game/biomes.ts` | World dimensions, twelve biome definitions, expedition pylons, and climate data |
-| `src/game/terrain.ts` | Domain-warped biome regions, terrain, caves, trees, coral, crystals, and ruins |
-| `src/game/coordinates.ts` | Logical/world coordinate conversion |
-| `src/game/geometry.ts` | Indexed, radially aligned voxel face generation |
-| `src/game/environment.ts` | Biome atmosphere, weather, tornado visuals, fish, and wyrm |
-| `src/game/Atlas.tsx` | Actual-world cartography, biome selection, travel, and waypoints |
-| `src/game/model.ts` | Typed save schema, inventory, regions, and field records |
-| `src/game/Panels.tsx` | Inventory, physiology, and journal interfaces |
-| `src/game/Workbench.tsx` | Manual shaping and sleep interactions |
-| `src/game/ObjectPreview.tsx` | Interactive 3D tool and rock previews |
-| `src/game/audio.ts` | Procedural atmosphere and interaction sounds |
+| `src/game/core/engine.ts` | Rendering, input, movement, interactions, entities, and combat |
+| `src/game/core/environment.ts` | Biome atmosphere, weather, tornado visuals, fish, and wyrm |
+| `src/game/core/audio.ts` | Procedural atmosphere and interaction sounds |
+| `src/game/world/biomes.ts` | World dimensions, biome definitions, expedition pylons, and climate data |
+| `src/game/world/caves.ts` | Cave strata, subterranean biome table, and depth mapping |
+| `src/game/world/terrain.ts` | Domain-warped biome regions, terrain, caves, trees, coral, crystals, and ruins |
+| `src/game/world/world.ts` | Chunk streaming, edit storage, surface meshing, distant LOD, and fluid meshes |
+| `src/game/world/geometry.ts` | Indexed, radially aligned voxel face generation |
+| `src/game/world/coordinates.ts` | Logical/world coordinate conversion |
+| `src/game/creatures/creatures.ts` | **The bestiary**: species roster, disposition, spawn weights, drops, and every blocky model |
+| `src/game/data/model.ts` | Typed save schema, inventory, crops, and field records |
+| `src/game/panels/Panels.tsx` | Inventory, physiology, journal, and bestiary index interfaces |
+| `src/game/panels/Atlas.tsx` | Actual-world cartography, biome selection, travel, and waypoints |
+| `src/game/panels/Workbench.tsx` | Manual shaping and sleep interactions |
+| `src/game/panels/ObjectPreview.tsx` | Interactive 3D tool and rock previews |
+| `public/favicon.svg` | The moth mark, and the fallback title-screen artwork |
+| `public/images/ernas-world.jpg` | Title-screen photograph |
 
 ## Scope
 
-This is a single-player vertical slice, not the full production game described in the specification. The desert, blood shores, spiked forest, and tree settlements are playable **inner-cylinder echoes of the outer-world biomes**, not a separately simulated outer sphere. Canopy settlements are explorable voxel ruins, without sapient trading NPCs. The outer void, socket-and-plug circuit, full volumetric fluids, mechanical/runic networks, golem automation, complex fauna AI, later bosses/cosmic unfolding, and LAN multiplayer remain unimplemented. The title-screen illustration is cinematic artwork; gameplay uses the real-time procedural world.
+This is a single-player vertical slice, not the full production game described in the specification. The desert, blood shores, spiked forest, and tree settlements are playable **inner-cylinder echoes of the outer-world biomes**, not a separately simulated outer sphere. Canopy settlements are explorable voxel ruins, without sapient trading NPCs. The outer void, socket-and-plug circuit, full volumetric fluids, mechanical/runic networks, golem automation, complex fauna AI (species follow their dispositions rather than full ecologies), later bosses/cosmic unfolding, and LAN multiplayer remain unimplemented. The title-screen illustration is cinematic artwork; gameplay uses the real-time procedural world.
 
 WebGL 2 and hardware acceleration are required for the world. The build has been verified using the provided production build tool. Browser performance, pointer-lock permissions, and graphics behavior on individual devices still require live-browser testing.
